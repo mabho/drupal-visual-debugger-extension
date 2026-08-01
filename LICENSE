@@ -1,0 +1,9 @@
+SPDX-License-Identifier: GPL-2.0-or-later
+
+This project bundles the built output of drupal-visual-debugger
+(https://github.com/mabho/drupal-visual-debugger), which is licensed
+GPL-2.0-or-later, matching Drupal.org contribution requirements. This
+extension is distributed under the same license.
+
+The full license text is available at:
+https://www.gnu.org/licenses/old-licenses/gpl-2.0.html

@@ -1,0 +1,7 @@
+.DS_Store
+*.log
+.claude
+
+# lib/ holds machine-specific symlinks into the drupal-visual-debugger
+# source checkout (see scripts/link-lib.sh) — not portable, not committed.
+lib/*
