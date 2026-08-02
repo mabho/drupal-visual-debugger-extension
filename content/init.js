@@ -20,6 +20,9 @@
       },
     };
 
-    window.DrupalVisualDebugger.init({ storage: chromeStorageAdapter });
+    // Stashed on window so background.js's deactivateTab() can call
+    // .destroy() on it later — this document may still be alive (same-tab,
+    // same-origin toggle-off) without a fresh page load in between.
+    window.__drupalVisualDebuggerInstance = window.DrupalVisualDebugger.init({ storage: chromeStorageAdapter });
   });
 })();
