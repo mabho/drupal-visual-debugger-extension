@@ -4,7 +4,13 @@
   "version": "0.1.0",
   "description": "Overlays Drupal Twig theme-debug info and an inspector panel on the current page. Requires Twig debugging enabled on the site.",
   "action": {
-    "default_title": "Toggle Drupal Visual Debugger"
+    "default_title": "Toggle Drupal Visual Debugger",
+    "default_icon": {
+      "16": "icons/icon_drupal-visual-debugger_16x16.png",
+      "32": "icons/icon_drupal-visual-debugger_32x32.png",
+      "48": "icons/icon_drupal-visual-debugger_48x48.png",
+      "128": "icons/icon_drupal-visual-debugger_128x128.png"
+    }
   },
   "background": {
     "service_worker": "background.js"
