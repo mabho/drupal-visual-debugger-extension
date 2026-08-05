@@ -19,7 +19,7 @@
   "optional_host_permissions": ["http://*/*", "https://*/*"],
   "web_accessible_resources": [
     {
-      "resources": ["lib/fonts/*"],
+      "resources": ["node_modules/drupal-visual-debugger/dist/fonts/*"],
       "matches": ["<all_urls>"]
     }
   ]

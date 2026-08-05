@@ -4,12 +4,12 @@
 // ourselves and rewrite those paths to absolute chrome-extension:// URLs
 // before injecting it as a css string.
 async function injectFontsCss(tabId) {
-  const cssUrl = chrome.runtime.getURL('lib/visual-debugger.fonts.css');
+  const cssUrl = chrome.runtime.getURL('node_modules/drupal-visual-debugger/dist/visual-debugger.fonts.css');
   const raw = await (await fetch(cssUrl)).text();
 
   const fixed = raw.replace(
     /url\((['"]?)fonts\//g,
-    `url($1${chrome.runtime.getURL('lib/fonts/')}`
+    `url($1${chrome.runtime.getURL('node_modules/drupal-visual-debugger/dist/fonts/')}`
   );
 
   await chrome.scripting.insertCSS({ target: { tabId }, css: fixed });
@@ -24,14 +24,14 @@ async function injectFontsCss(tabId) {
 async function activateTab(tabId) {
   await chrome.scripting.insertCSS({
     target: { tabId },
-    files: ['lib/visual-debugger.min.css'],
+    files: ['node_modules/drupal-visual-debugger/dist/visual-debugger.min.css'],
   });
 
   await injectFontsCss(tabId);
 
   await chrome.scripting.executeScript({
     target: { tabId },
-    files: ['lib/visual-debugger.global.min.js', 'content/init.js'],
+    files: ['node_modules/drupal-visual-debugger/dist/visual-debugger.global.min.js', 'content/init.js'],
   });
 }
 
