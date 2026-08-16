@@ -10,10 +10,11 @@ name: Release
 # flow), minus its npm-pack step — nothing here is meant to be installed
 # as an npm dependency by anyone else.
 #
-# Triggers on any plain semver-shaped tag (e.g. 1.0.1), matching npm
-# version's default tag format (no "v" prefix). Run
-# `npm version patch|minor|major` to bump package.json (and, via its
-# "version" script, manifest.json too) and push the tag that runs this.
+# Triggers on any tag matching *.*.* — this also matches npm version's
+# actual default tag format, which prefixes with "v" (e.g. "v1.0.1") unless
+# tag-version-prefix is configured otherwise; the glob doesn't care either
+# way. Run `npm version patch|minor|major` to bump package.json (and, via
+# its "version" script, manifest.json too) and push the tag that runs this.
 #
 # Note: this workflow file itself must already be present on the default
 # branch (main) before a tag push will trigger it — GitHub Actions only
@@ -49,7 +50,12 @@ jobs:
           PACKAGE_NAME: drupal-visual-debugger-extension
         run: |
           set -euo pipefail
-          staging="staging/${PACKAGE_NAME}"
+          # No named subfolder inside $staging, deliberately: unlike the
+          # library's own release zip (a generic download, fine to wrap in
+          # a project-named folder), the Chrome Web Store requires
+          # manifest.json to sit at the zip's own root — a nested
+          # manifest.json gets the upload rejected.
+          staging="staging"
           lib_dist="node_modules/drupal-visual-debugger/dist"
 
           mkdir -p "$staging/content" "$staging/icons" "$staging/${lib_dist}/fonts"
@@ -63,7 +69,7 @@ jobs:
              "$staging/${lib_dist}/"
           cp "${lib_dist}"/fonts/* "$staging/${lib_dist}/fonts/"
 
-          (cd staging && zip -r "../${PACKAGE_NAME}-${GITHUB_REF_NAME}.zip" "${PACKAGE_NAME}")
+          (cd "$staging" && zip -r "../${PACKAGE_NAME}-${GITHUB_REF_NAME}.zip" .)
 
       - name: Upload release asset
         env:
