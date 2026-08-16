@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Drupal Visual Debugger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Overlays Drupal Twig theme-debug info and an inspector panel on the current page. Requires Twig debugging enabled on the site.",
   "action": {
     "default_title": "Toggle Drupal Visual Debugger",
