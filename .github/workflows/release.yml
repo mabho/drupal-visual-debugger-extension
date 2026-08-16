@@ -1,0 +1,76 @@
+name: Release
+
+# Builds a Chrome-Web-Store-ready zip and attaches it to a GitHub Release:
+# manifest.json, background.js, content/init.js, icons/*.png, and only the
+# specific drupal-visual-debugger dist/ files manifest.json/background.js
+# actually reference (not that library's src/, README, LICENSE,
+# package.json, or .map sourcemaps, and not any other node_modules
+# package). Mirrors the drupal-visual-debugger library's own
+# .github/workflows/release.yml (same trigger, same npm-version-driven
+# flow), minus its npm-pack step — nothing here is meant to be installed
+# as an npm dependency by anyone else.
+#
+# Triggers on any plain semver-shaped tag (e.g. 1.0.1), matching npm
+# version's default tag format (no "v" prefix). Run
+# `npm version patch|minor|major` to bump package.json (and, via its
+# "version" script, manifest.json too) and push the tag that runs this.
+#
+# Note: this workflow file itself must already be present on the default
+# branch (main) before a tag push will trigger it — GitHub Actions only
+# evaluates tag-push triggers against workflows it already knows about
+# from the default branch, not ones that only exist on the tagged commit.
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Assemble extension package
+        env:
+          PACKAGE_NAME: drupal-visual-debugger-extension
+        run: |
+          set -euo pipefail
+          staging="staging/${PACKAGE_NAME}"
+          lib_dist="node_modules/drupal-visual-debugger/dist"
+
+          mkdir -p "$staging/content" "$staging/icons" "$staging/${lib_dist}/fonts"
+
+          cp manifest.json background.js "$staging/"
+          cp content/init.js "$staging/content/"
+          cp icons/*.png "$staging/icons/"
+          cp "${lib_dist}/visual-debugger.min.css" \
+             "${lib_dist}/visual-debugger.fonts.css" \
+             "${lib_dist}/visual-debugger.global.min.js" \
+             "$staging/${lib_dist}/"
+          cp "${lib_dist}"/fonts/* "$staging/${lib_dist}/fonts/"
+
+          (cd staging && zip -r "../${PACKAGE_NAME}-${GITHUB_REF_NAME}.zip" "${PACKAGE_NAME}")
+
+      - name: Upload release asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh release create "${GITHUB_REF_NAME}" \
+            "drupal-visual-debugger-extension-${GITHUB_REF_NAME}.zip" \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes

@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "Chrome extension overlaying Drupal Twig theme-debug info and an inspector panel, powered by the drupal-visual-debugger library.",
+  "scripts": {
+    "version": "node scripts/sync-manifest-version.mjs && git add manifest.json",
+    "postversion": "git push && git push --tags"
+  },
   "dependencies": {
     "drupal-visual-debugger": "https://github.com/mabho/drupal-visual-debugger/releases/download/1.3.1/drupal-visual-debugger-1.3.1.tgz"
   }
