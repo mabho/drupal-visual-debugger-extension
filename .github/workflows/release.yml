@@ -1,11 +1,13 @@
 name: Release
 
 # Builds a Chrome-Web-Store-ready zip and attaches it to a GitHub Release:
-# manifest.json, background.js, content/init.js, icons/*.png, and only the
-# specific drupal-visual-debugger dist/ files manifest.json/background.js
-# actually reference (not that library's src/, README, LICENSE,
-# package.json, or .map sourcemaps, and not any other node_modules
-# package). Mirrors the drupal-visual-debugger library's own
+# manifest.json, background.js, content/init.js, icons/*.png, this repo's
+# own LICENSE (required to travel with the distributed copy under
+# GPL-2.0-or-later — see LICENSE's own contents), and only the specific
+# drupal-visual-debugger dist/ files manifest.json/background.js actually
+# reference (not that library's own src/, README, LICENSE, package.json,
+# or .map sourcemaps, and not any other node_modules package). Mirrors the
+# drupal-visual-debugger library's own
 # .github/workflows/release.yml (same trigger, same npm-version-driven
 # flow), minus its npm-pack step — nothing here is meant to be installed
 # as an npm dependency by anyone else.
@@ -60,7 +62,7 @@ jobs:
 
           mkdir -p "$staging/content" "$staging/icons" "$staging/${lib_dist}/fonts"
 
-          cp manifest.json background.js "$staging/"
+          cp manifest.json background.js LICENSE "$staging/"
           cp content/init.js "$staging/content/"
           cp icons/*.png "$staging/icons/"
           cp "${lib_dist}/visual-debugger.min.css" \
