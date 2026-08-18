@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Drupal Visual Debugger</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: #1a1a1a;
+    max-width: 40rem;
+    margin: 2rem auto;
+    padding: 0 1.25rem;
+  }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.15rem; margin-top: 2rem; }
+  code { background: #f0f0f0; padding: 0.1em 0.3em; border-radius: 3px; }
+  .updated { color: #555; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<h1>Privacy Policy — Drupal Visual Debugger</h1>
+<p class="updated">Last updated: 2026-08-17</p>
+
+<p>
+Drupal Visual Debugger is a Chrome extension that overlays debug output
+Drupal itself already writes into a page's HTML — Twig theme-debug
+information (which template rendered an element, its theme hook,
+suggestions, and file path) and, when enabled, render-cache information
+(cache hit/miss, tags, contexts, keys, max-age) — through an on-page
+overlay and a fly-out inspector panel.
+</p>
+
+<h2>What this extension does with page content</h2>
+<p>
+To build the overlay and inspector panel, the extension reads the HTML
+comments Drupal's own debug settings write into the page (Twig theme-debug
+and, separately, render-cache debug output), along with the structure and
+position of the corresponding page elements. This processing happens
+entirely inside your browser tab. Nothing read from the page is sent to
+any server, to the developer, or to any third party — there is no
+analytics, tracking, or remote logging of any kind.
+</p>
+
+<h2>What this extension stores, and where</h2>
+<p>
+The extension stores two small pieces of state, both entirely on your own
+device, using Chrome's built-in storage APIs:
+</p>
+<ul>
+  <li><strong>Panel display preferences</strong> (the inspector panel's
+    width, and whether it's shown expanded or collapsed) — saved via
+    <code>chrome.storage.local</code> so your preference persists across
+    page loads. This is cleared if you remove the extension or clear its
+    storage.</li>
+  <li><strong>Per-tab on/off state</strong> — which browser tabs currently
+    have the debugger turned on, and for which site — saved via
+    <code>chrome.storage.session</code>. This is used only to keep the
+    debugger active as you navigate within the same site, and is cleared
+    automatically when you close the tab, navigate to a different site, or
+    restart your browser.</li>
+</ul>
+<p>
+Neither of these is transmitted anywhere. No personally identifiable
+information, health information, financial or payment information,
+authentication credentials, personal communications, or location data is
+collected, at any point.
+</p>
+
+<h2>Permissions this extension uses</h2>
+<ul>
+  <li><strong>activeTab</strong> — lets the extension act on the specific
+    tab you click its toolbar icon on, rather than requesting standing
+    access to your browsing.</li>
+  <li><strong>scripting</strong> — used to inject the extension's own
+    bundled CSS/JavaScript (the overlay and inspector panel) into the page
+    when you turn the debugger on, and to remove it again when you turn it
+    off. Everything injected ships inside the extension package itself —
+    nothing is fetched or executed from anywhere else.</li>
+  <li><strong>storage</strong> — backs the two local-only uses described
+    above.</li>
+  <li><strong>Host permission, requested per-site</strong> — rather than
+    requesting access to every website up front, the extension asks for
+    permission to a specific site's origin only at the moment you click
+    its toolbar icon there. It does not hold standing access to sites you
+    haven't explicitly activated it on.</li>
+</ul>
+
+<h2>Third parties</h2>
+<p>
+This extension does not share, sell, or transmit any data to third
+parties, because it does not transmit data anywhere in the first place.
+There are no third-party analytics or advertising SDKs of any kind.
+</p>
+
+<h2>Children's privacy</h2>
+<p>
+This extension is a developer tool for inspecting Drupal websites and is
+not directed at children. It does not knowingly collect any data from
+anyone, including children.
+</p>
+
+<h2>Open source</h2>
+<p>
+This extension's source, and the
+<a href="https://github.com/mabho/drupal-visual-debugger">drupal-visual-debugger</a>
+library it bundles, are both open source (GPL-2.0-or-later) and available
+at
+<a href="https://github.com/mabho/drupal-visual-debugger-extension">github.com/mabho/drupal-visual-debugger-extension</a>.
+</p>
+
+<h2>Changes to this policy</h2>
+<p>
+If this policy changes, the updated version will be posted at this same
+URL with a revised "Last updated" date above.
+</p>
+
+<h2>Contact</h2>
+<p>
+Questions about this policy or the extension's data practices can be sent
+to <a href="mailto:marcos.buarque@uol.com.br">marcos.buarque@uol.com.br</a>,
+or raised as an issue on the
+<a href="https://github.com/mabho/drupal-visual-debugger-extension/issues">GitHub repository</a>.
+</p>
+
+</body>
+</html>
