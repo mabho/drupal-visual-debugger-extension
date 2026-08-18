@@ -1,6 +1,6 @@
 {
   "name": "drupal-visual-debugger-extension",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "description": "Chrome extension overlaying Drupal Twig theme-debug info and an inspector panel, powered by the drupal-visual-debugger library.",
   "scripts": {
